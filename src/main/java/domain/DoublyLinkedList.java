@@ -1,16 +1,16 @@
 package domain;
 
-public class SinglyLinkedList implements List{
+public class DoublyLinkedList implements List{
     private Node first; //apuntador al inicio de la lista
 
-    public SinglyLinkedList() {
+    public DoublyLinkedList() {
         this.first = null; //la lista no existe
     }
 
     @Override
     public int size() throws ListException {
         if(isEmpty()){
-            throw new ListException("Singly Linked List is empty");
+            throw new ListException("Doubly Linked List is empty");
         }
         Node aux = first;
         int count=0;
@@ -34,7 +34,7 @@ public class SinglyLinkedList implements List{
     @Override
     public boolean contains(Object element) throws ListException {
         if(isEmpty()){
-            throw new ListException("Singly Linked List is empty");
+            throw new ListException("Doubly Linked List is empty");
         }
         Node aux = first;
         while(aux!=null){
@@ -61,6 +61,8 @@ public class SinglyLinkedList implements List{
             //aux esta en el ult nodo, por lo q lo podemos enlazar
             //con el nuevo nodo
             aux.next = newNode;
+            //hago el doble enlace
+            newNode.prev = aux;
         }
 
     }
@@ -72,6 +74,8 @@ public class SinglyLinkedList implements List{
             first = newNode;
         }else{
             newNode.next = first;
+            //hago el doble enlace
+            first.prev = newNode;
             first = newNode;
         }
 
@@ -90,7 +94,7 @@ public class SinglyLinkedList implements List{
     @Override
     public void remove(Object element) throws ListException {
         if(isEmpty()){
-            throw new ListException("Singly Linked List is Empty");
+            throw new ListException("Doubly Linked List is Empty");
         }
         //Caso 1. El elemento a suprimir esta al inicio
         if(util.Utility.compare(first.data, element)==0){
@@ -106,6 +110,10 @@ public class SinglyLinkedList implements List{
             if(aux!=null && util.Utility.compare(aux.data, element)==0){
                 //ya lo encontro, procedo a desenlazar el nodo
                 prev.next = aux.next;
+                //mantengo el doble enlace
+                if(aux.next!=null){
+                    aux.next.prev = aux.prev;
+                }
             }
         }
     }
@@ -123,7 +131,7 @@ public class SinglyLinkedList implements List{
     @Override
     public void sort() throws ListException {
         if(isEmpty()){
-            throw new ListException("Singly Linked List is Empty");
+            throw new ListException("Doubly Linked List is Empty");
         }
         for (int i = 1; i <= size() ; i++) {
             for (int j = i+1; j <= size() ; j++) {
@@ -139,7 +147,7 @@ public class SinglyLinkedList implements List{
     @Override
     public int indexOf(Object element) throws ListException {
         if(isEmpty()){
-            throw new ListException("Singly Linked List is Empty");
+            throw new ListException("Doubly Linked List is Empty");
         }
         Node aux = first;
         int index=1; //la lista inicia en 1
@@ -156,7 +164,7 @@ public class SinglyLinkedList implements List{
     @Override
     public Object getFirst() throws ListException {
         if(isEmpty()){
-            throw new ListException("Singly Linked List is Empty");
+            throw new ListException("Doubly Linked List is Empty");
         }
         return first.data;
     }
@@ -164,7 +172,7 @@ public class SinglyLinkedList implements List{
     @Override
     public Object getLast() throws ListException {
         if(isEmpty()){
-            throw new ListException("Singly Linked List is Empty");
+            throw new ListException("Doubly Linked List is Empty");
         }
         Node aux = first;
         //mientras no llegue al ult nodo
@@ -178,7 +186,7 @@ public class SinglyLinkedList implements List{
     @Override
     public Object getPrev(Object element) throws ListException {
         if(isEmpty()){
-            throw new ListException("Singly Linked List is Empty");
+            throw new ListException("Doubly Linked List is Empty");
         }
         if(util.Utility.compare(first.data, element)==0){
             return "It's the first, it has no previous";
@@ -191,7 +199,7 @@ public class SinglyLinkedList implements List{
             }
             aux=aux.next;
         }
-        return "Does not exist in Single Linked List";
+        return "Does not exist in Doubly Linked List";
     }
 
     @Override
@@ -202,7 +210,7 @@ public class SinglyLinkedList implements List{
     @Override
     public Node getNode(int index) throws ListException {
         if(isEmpty()){
-            throw new ListException("Singly Linked List is Empty");
+            throw new ListException("Doubly Linked List is Empty");
         }
         Node aux = first;
         int i = 1; // pos del primer nodo
@@ -218,7 +226,7 @@ public class SinglyLinkedList implements List{
 
     @Override
     public String toString() {
-        String result = "Singly Linked List Content\n\n";
+        String result = "Doubly Linked List Content\n\n";
         Node aux = first;
         while(aux!=null){
             result+= STR."\{aux.data}\n";

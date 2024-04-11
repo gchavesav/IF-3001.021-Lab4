@@ -1,11 +1,27 @@
 package util;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.BorderPane;
 import ucr.lab.HelloApplication;
 
+import java.io.IOException;
+
 public class UtilityFX {
+
+    public static void loadPage(String className, String page, BorderPane bp){
+        try {
+            Class cl = Class.forName(className);
+            FXMLLoader fxmlLoader = new FXMLLoader(cl.getResource(page));
+            bp.setCenter(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static Alert alert(String title, String headerText){
         Alert myalert = new Alert(Alert.AlertType.INFORMATION);
